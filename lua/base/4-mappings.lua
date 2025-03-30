@@ -1324,14 +1324,14 @@ if is_available("hop.nvim") then
   -- Note that Even though we are using ENTER for hop, you can still select items
   -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
 
-  maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.n["s"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
     end,
     desc = "Hop to word",
   }
-  maps.x["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.x["s"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
