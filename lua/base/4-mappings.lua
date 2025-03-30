@@ -682,10 +682,9 @@ if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then
   }
 end
 
--- neotree
-if is_available("neo-tree.nvim") then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Neotree" }
-end
+  maps.n["<leader>e"] = { function() require('oil').toggle_float() end, desc = "Oil" }
+-- maps.n["<leader>aa"] = { "<cmd>AvanteToggle<cr>", desc = "Avante Toggle" }
+
 
 -- session manager ---------------------------------------------------------
 if is_available("neovim-session-manager") then

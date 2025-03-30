@@ -109,4 +109,7 @@ return {
   { "zeioth/none-ls-external-sources.nvim", version = "^1" },
   { "zeioth/nvim-coverage", commit = "cdc2a51f681d0f392b5face7385ebca2df6452c1" },
   { "zeioth/project.nvim", commit = "9cc719f455295e7a2fc7340d4fd87327f3fe15ca" },
+  { "yetone/avante.nvim", version = "latest"},
+  { "stevearc/oil.nvim", version = "latest"},
+
 }

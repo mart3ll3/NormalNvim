@@ -161,27 +161,27 @@ if is_available "alpha-nvim" then
 end
 
 -- 4. Update neotree when closing the git client.
-if is_available "neo-tree.nvim" then
-  autocmd("TermClose", {
-    pattern = { "*lazygit", "*gitui" },
-    desc = "Refresh Neo-Tree git when closing lazygit/gitui",
-    callback = function()
-      local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
-      if manager_avail then
-        for _, source in ipairs {
-          "filesystem",
-          "git_status",
-          "document_symbols",
-        } do
-          local module = "neo-tree.sources." .. source
-          if package.loaded[module] then
-            manager.refresh(require(module).name)
-          end
-        end
-      end
-    end,
-  })
-end
+-- if is_available "neo-tree.nvim" then
+--   autocmd("TermClose", {
+--     pattern = { "*lazygit", "*gitui" },
+--     desc = "Refresh Neo-Tree git when closing lazygit/gitui",
+--     callback = function()
+--       local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
+--       if manager_avail then
+--         for _, source in ipairs {
+--           "filesystem",
+--           "git_status",
+--           "document_symbols",
+--         } do
+--           local module = "neo-tree.sources." .. source
+--           if package.loaded[module] then
+--             manager.refresh(require(module).name)
+--           end
+--         end
+--       end
+--     end,
+--   })
+-- end
 
 -- 5. Create parent directories when saving a file.
 autocmd("BufWritePre", {
