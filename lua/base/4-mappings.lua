@@ -308,6 +308,10 @@ maps.n["<leader>C"] = { -- Close buffer keeping the window.
   function() require("heirline-components.buffer").close() end,
   desc = "Close buffer",
 }
+maps.n["<C-q>"] = { -- Close buffer keeping the window.
+  function() require("heirline-components.buffer").close() end,
+  desc = "Close buffer",
+}
 maps.n["<leader>bw"] = {     -- Closes the window
   function()
     vim.cmd("silent! close") -- Be aware you can't close the last window
@@ -373,6 +377,7 @@ maps.n["<leader>bd"] = {
   end,
   desc = "Delete buffer from tabline",
 }
+
 maps.n["<leader>bl"] = {
   function() require("heirline-components.buffer").close_left() end,
   desc = "Close all buffers to the left",
@@ -616,7 +621,7 @@ if is_available("gitsigns.nvim") then
     function() require("gitsigns").reset_buffer() end,
     desc = "Reset Git buffer",
   }
-  maps.n["<leader>gs"] = {
+  maps.n["<leader>gh"] = {
     function() require("gitsigns").stage_hunk() end,
     desc = "Stage Git hunk",
   }
@@ -642,7 +647,7 @@ if is_available("vim-fugitive") then
 end
 -- git client
 if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
-  maps.n["<leader>gg"] = {
+  maps.n["<leader>gs"] = {
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
@@ -655,7 +660,7 @@ if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
   }
 end
 if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
-  maps.n["<leader>gg"] = {
+  maps.n["<leader>gs"] = {
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
@@ -672,6 +677,16 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
   }
 end
 
+  maps.n["<leader>gf"] = {
+    -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
+    "<cmd>AdvancedGitSearch search_log_content_file<CR>",
+    desc = "AdvancedGitSearch file",
+  }
+  maps.n["<leader>ga"] = {
+    -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
+    "<cmd>AdvancedGitSearch search_log_content<CR>",
+    desc = "AdvancedGitSearch repo",
+  }
 -- file browsers ------------------------------------
 -- yazi
 if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then
