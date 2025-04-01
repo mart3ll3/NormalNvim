@@ -928,5 +928,18 @@ return {
     },
     lazy = "true",
 },
+  {
+    "sindrets/diffview.nvim",
+    event = "VeryLazy",
+    opts = {
+      merge_tool = {
+            -- Config for conflicted files in diff views during a merge or rebase.
+            layout = "diff3_mixed",
+          },
+    },
+    config = function(_, opts)
+      require("diffview").setup(opts)
+    end,
+  },
 
 } -- end of return

@@ -542,6 +542,7 @@ return {
   {
     "folke/noice.nvim",
     event = "User BaseDefered",
+
     opts = function()
       local enable_conceal = false          -- Hide command text if true
       return {
@@ -570,6 +571,9 @@ return {
         },
       }
     end
+    -- config = function(_, opts)
+    --   require("noice").setup(opts)
+    -- end,
   },
 
   --  UI icons [icons]

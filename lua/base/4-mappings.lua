@@ -144,8 +144,10 @@ vim.keymap.set("n", "<C-u>", "<Cmd>lua vim.cmd('normal! <C-u>'); MiniAnimate.exe
 -- vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-Left>", "<C-w>h", { desc = "Go Window to the left" })
 vim.keymap.set("n", "<C-Right>", "<C-w>l", { desc = "Go Window to the right" })
-vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { silent = true })
-vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { silent = true })
+vim.keymap.set("n", "<C-Down>", "<C-w>j", { desc = "Go Window to the down" })
+vim.keymap.set("n", "<C-Up>", "<C-w>k", { desc = "Go Window to the up" })
+vim.keymap.set("n", "<S-Left>", ":bnext<CR>", { silent = true })
+vim.keymap.set("n", "<S-Right>", ":bprevious<CR>", { silent = true })
 
 
 -- Make 'c' key not copy to clipboard when changing a character.
@@ -687,6 +689,22 @@ end
     "<cmd>AdvancedGitSearch search_log_content<CR>",
     desc = "AdvancedGitSearch repo",
   }
+
+maps.n["<leader>gd"] = {
+    vim.cmd.DiffviewOpen,
+    desc = "Diffview",
+  }
+
+  maps.n["<leader>gq"] = {
+    vim.cmd.DiffviewClose,
+    desc = "Diffview Close",
+  }
+
+  maps.n["<leader>gg"] = {
+    vim.cmd.DiffviewToggleFiles,
+    desc = "Diffview Close",
+  }
+
 -- file browsers ------------------------------------
 -- yazi
 if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then
@@ -751,23 +769,23 @@ if is_available("smart-splits.nvim") then
   --   function() require("smart-splits").move_cursor_left() end,
   --   desc = "Move to left split",
   -- }
-  maps.n["<C-j>"] = {
-    function() require("smart-splits").move_cursor_down() end,
-    desc = "Move to below split",
-  }
-  maps.n["<C-k>"] = {
-    function() require("smart-splits").move_cursor_up() end,
-    desc = "Move to above split",
-  }
+  -- maps.n["<C-j>"] = {
+  --   function() require("smart-splits").move_cursor_down() end,
+  --   desc = "Move to below split",
+  -- }
+  -- maps.n["<C-k>"] = {
+  --   function() require("smart-splits").move_cursor_up() end,
+  --   desc = "Move to above split",
+  -- }
   -- maps.n["<C-l>"] = {
   --   function() require("smart-splits").move_cursor_right() end,
   --   desc = "Move to right split",
   -- }
-  maps.n["<C-Up>"] = {
+  maps.n["<C-k>"] = {
     function() require("smart-splits").resize_up() end,
     desc = "Resize split up",
   }
-  maps.n["<C-Down>"] = {
+  maps.n["<C-j>"] = {
     function() require("smart-splits").resize_down() end,
     desc = "Resize split down",
   }
@@ -780,16 +798,16 @@ if is_available("smart-splits.nvim") then
     desc = "Resize split right",
   }
 else
-  maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
-  maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
-  maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
-  maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
-  maps.n["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
-  maps.n["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
-  -- maps.n["<C-Left>"] =
-  -- { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
-  -- maps.n["<C-Right>"] =
-  -- { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
+  -- maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
+  -- maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
+  -- maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
+  -- maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
+  maps.n["<C-k>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
+  maps.n["<C-j>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
+  maps.n["<C-h>"] =
+  { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
+  maps.n["<C-l>"] =
+  { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
 -- aerial.nvimm ------------------------------------------------------------
