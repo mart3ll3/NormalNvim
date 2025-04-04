@@ -146,8 +146,8 @@ vim.keymap.set("n", "<C-Left>", "<C-w>h", { desc = "Go Window to the left" })
 vim.keymap.set("n", "<C-Right>", "<C-w>l", { desc = "Go Window to the right" })
 vim.keymap.set("n", "<C-Down>", "<C-w>j", { desc = "Go Window to the down" })
 vim.keymap.set("n", "<C-Up>", "<C-w>k", { desc = "Go Window to the up" })
-vim.keymap.set("n", "<S-Left>", ":bnext<CR>", { silent = true })
-vim.keymap.set("n", "<S-Right>", ":bprevious<CR>", { silent = true })
+-- vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { silent = true })
+-- vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { silent = true })
 
 
 -- Make 'c' key not copy to clipboard when changing a character.
@@ -302,11 +302,11 @@ maps.n["<leader>pv"] = { "<cmd>DistroReadVersion<cr>", desc = "Distro version" }
 maps.n["<leader>pc"] = { "<cmd>DistroReadChangelog<cr>", desc = "Distro changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = { -- Close window and buffer at the same time.
+maps.n["<leader>x"] = { -- Close window and buffer at the same time.
   function() require("heirline-components.buffer").wipe() end,
   desc = "Wipe buffer",
 }
-maps.n["<leader>C"] = { -- Close buffer keeping the window.
+maps.n["<leader>X"] = { -- Close buffer keeping the window.
   function() require("heirline-components.buffer").close() end,
   desc = "Close buffer",
 }
@@ -329,13 +329,13 @@ maps.n["<leader>ba"] = {
   function() vim.cmd("wa") end,
   desc = "Write all changed buffers",
 }
-maps.n["]b"] = {
+maps.n["<S-Right>"] = {
   function()
     require("heirline-components.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Next buffer",
 }
-maps.n["[b"] = {
+maps.n["<S-Left>"] = {
   function()
     require("heirline-components.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
@@ -635,7 +635,7 @@ if is_available("gitsigns.nvim") then
     function() require("gitsigns").undo_stage_hunk() end,
     desc = "Unstage Git hunk",
   }
-  maps.n["<leader>gd"] = {
+  maps.n["<leader>gD"] = {
     function() require("gitsigns").diffthis() end,
     desc = "View Git diff",
   }
@@ -648,6 +648,7 @@ if is_available("vim-fugitive") then
   }
 end
 -- git client
+
 if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
   maps.n["<leader>gs"] = {
     function()
@@ -662,7 +663,7 @@ if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
   }
 end
 if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
-  maps.n["<leader>gs"] = {
+  maps.n["<leader>gg"] = {
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
@@ -678,7 +679,6 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
     desc = "ToggleTerm gitui",
   }
 end
-
   maps.n["<leader>gf"] = {
     -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
     "<cmd>AdvancedGitSearch search_log_content_file<CR>",
@@ -690,7 +690,12 @@ end
     desc = "AdvancedGitSearch repo",
   }
 
-maps.n["<leader>gd"] = {
+  -- maps.n["<leader>gs"] = {
+  --   vim.cmd.LazyGit,
+  --   desc = "LazyGit",
+  -- }
+
+  maps.n["<leader>gd"] = {
     vim.cmd.DiffviewOpen,
     desc = "Diffview",
   }
@@ -699,6 +704,7 @@ maps.n["<leader>gd"] = {
     vim.cmd.DiffviewClose,
     desc = "Diffview Close",
   }
+
 
   maps.n["<leader>gg"] = {
     vim.cmd.DiffviewToggleFiles,
@@ -1422,7 +1428,7 @@ function M.lsp_mappings(client, bufnr)
   end
 
   -- Code actions
-  lsp_mappings.n["<leader>la"] = {
+  lsp_mappings.n["<leader>ca"] = {
     function() vim.lsp.buf.code_action() end,
     desc = "LSP code action",
   }
