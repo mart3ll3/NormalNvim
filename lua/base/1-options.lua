@@ -4,7 +4,7 @@
 -- ----------------------------------------
 
 -- Theme
-vim.g.default_colorscheme = "tokyonight-night"
+vim.g.default_colorscheme = "dracula"
 
 -- Options --------------------------------------------------------------------
 vim.opt.breakindent = true -- Wrap indent to match  line start.
@@ -16,7 +16,7 @@ vim.opt.cursorline = true -- Highlight the text line of the cursor.
 vim.opt.expandtab = true -- Enable the use of space in tab.
 vim.opt.fileencoding = "utf-8" -- File content encoding for the buffer.
 vim.opt.fillchars = { eob = " " } -- Disable `~` on nonexistent lines.
-vim.opt.foldenable = true -- Enable fold for nvim-ufo.
+vim.opt.foldenable = false -- Enable fold for nvim-ufo.
 vim.opt.foldlevel = 99 -- set highest foldlevel for nvim-ufo.
 vim.opt.foldlevelstart = 99 -- Start with all code unfolded.
 vim.opt.foldcolumn = "1" -- Show foldcolumn in nvim 0.9+.
@@ -29,7 +29,7 @@ vim.opt.number = true -- Show numberline.
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible.
 vim.opt.pumheight = 10 -- Height of the pop up menu.
 vim.opt.relativenumber = true -- Show relative numberline.
-vim.opt.shiftwidth = 2 -- Number of space inserted for indentation.
+vim.opt.shiftwidth = 4 -- Number of space inserted for indentation.
 vim.opt.showmode = false -- Disable showing modes in command line.
 vim.opt.showtabline = 2 -- always display tabline.
 vim.opt.signcolumn = "yes" -- Always show the sign column.
@@ -37,7 +37,7 @@ vim.opt.smartcase = true -- Case sensitivie searching.
 vim.opt.smartindent = false -- Smarter autoindentation.
 vim.opt.splitbelow = true -- Splitting a new window below the current one.
 vim.opt.splitright = true -- Splitting a new window at the right of the current one.
-vim.opt.tabstop = 2 -- Number of space in a tab.
+vim.opt.tabstop = 4 -- Number of space in a tab.
 
 vim.opt.termguicolors = true -- Enable 24-bit RGB color in the TUI.
 vim.opt.undofile = true -- Enable persistent undo between session and reboots.
@@ -48,7 +48,7 @@ vim.opt.shada = "!,'1000,<50,s10,h" -- Remember the last 1000 opened files
 vim.opt.history = 1000 -- Number of commands to remember in a history table (per buffer).
 vim.opt.swapfile = false -- Ask what state to recover when opening a file that was not saved.
 vim.opt.wrap = true -- Disable wrapping of lines longer than the width of window.
-vim.opt.colorcolumn = "80" -- PEP8 like character limit vertical bar.
+-- vim.opt.colorcolumn = "80" -- PEP8 like character limit vertical bar.
 vim.opt.mousescroll = "ver:1,hor:0" -- Disables hozirontal scroll in neovim.
 vim.opt.guicursor = "n:blinkon200,i-ci-ve:ver25" -- Enable cursor blink.
 vim.opt.autochdir = true -- Use current file dir as working dir (See project.nvim).
@@ -84,5 +84,5 @@ vim.g.notifications_enabled = true -- Enable notifications.
 vim.g.semantic_tokens_enabled = true -- Enable lsp semantic tokens at start.
 vim.g.url_effect_enabled = true -- Highlight URLs with an underline effect.
 
-vim.o.guifont = "JetBrainsMono Nerd Font:h17"
+vim.o.guifont = "JetBrainsMono Nerd Font:h12"
 
