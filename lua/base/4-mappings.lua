@@ -711,6 +711,18 @@ end
     desc = "Diffview Close",
   }
 
+
+  maps.n["<leader>gm"] = {
+    vim.cmd.GitBlameOpenCommitURL,
+    desc = "Git Open Commit Url",
+  }
+  maps.n["<leader>gM"] = {
+    vim.cmd.GitBlameOpenFileURL,
+    desc = "Git Open File Url",
+  }
+-- vim.keymap.set("n", "<leader>gu", "<cmd>GitBlameOpenCommitURL<CR>", { desc = "Git Open Commit Url" })
+-- vim.keymap.set("n", "<leader>gU", "<cmd>GitBlameOpenFileURL<CR>", { desc = "Git Open File Url" })
+
 -- file browsers ------------------------------------
 -- yazi
 if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then

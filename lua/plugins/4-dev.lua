@@ -143,7 +143,24 @@ return {
       vim.g.fugitive_no_maps = 1
     end,
   },
+{
+    "f-person/git-blame.nvim",
+    -- load the plugin at startup
+    event = "User BaseGitFile",
+    -- Because of the keys part, you will be lazy loading this plugin.
+    -- The plugin wil only load once one of the keys is used.
+    -- If you want to load the plugin at startup, add something like event = "VeryLazy",
+    -- or lazy = false. One of both options will work.
+    opts = {
+        -- your configuration comes here
+        -- for example
+        enabled = true,  -- if you want to enable the plugin
+        message_template = " <summary> • <date> • <author> • <<sha>>", -- template for the blame message, check the Message template section for more options
+        date_format = "%m-%d-%Y %H:%M:%S", -- template for the date, check Date format section for more options
+        virtual_text_column = 1,  -- virtual text start column, check Start virtual text at column section for more options
+    },
 
+},
   --  ANALYZER ----------------------------------------------------------------
   --  [symbols tree]
   --  https://github.com/stevearc/aerial.nvim
@@ -904,6 +921,7 @@ return {
 
 {
     "aaronhallaert/advanced-git-search.nvim",
+    lazy = true,
     cmd = { "AdvancedGitSearch" },
     config = function()
         -- optional: setup telescope before loading the extension
@@ -926,11 +944,10 @@ return {
           -- to open commits in browser with fugitive
           "tpope/vim-rhubarb",       --- See dependencies
     },
-    lazy = "true",
 },
   {
     "sindrets/diffview.nvim",
-    event = "VeryLazy",
+    lazy = true,
     opts = {
       merge_tool = {
             -- Config for conflicted files in diff views during a merge or rebase.
@@ -942,4 +959,60 @@ return {
     end,
   },
 
+  -- {
+  --   "kdheepak/lazygit.nvim",
+  --   event = "User BaseFile",
+  -- },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        panel = {
+          enabled = false,
+          auto_refresh = false,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = false,
+            open = "<M-CR>"
+          },
+          layout = {
+            position = "bottom", -- | top | left | right | horizontal | vertical
+            ratio = 0.4
+          },
+        },
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          hide_during_completion = true,
+          debounce = 400,
+          keymap = {
+            accept = "<C-y>",
+            accept_word = false,
+            accept_line = false,
+            next = false,
+            prev = false,
+            dismiss = false,
+          },
+        },
+        filetypes = {
+          yaml = false,
+          markdown = false,
+          help = false,
+          gitcommit = false,
+          gitrebase = false,
+          hgcommit = false,
+          svn = false,
+          cvs = false,
+          ["."] = false,
+        },
+        copilot_node_command = 'node', -- Node.js version must be > 18.x
+        server_opts_overrides = {},
+      })
+    end,
+  },
 } -- end of return
