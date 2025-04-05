@@ -930,7 +930,9 @@ if is_available("telescope.nvim") then
   -- Let's disable this. It is way too imprecise. Use rnvimr instead.
   maps.n["<leader>sf"] = {
     function()
-      require("telescope.builtin").find_files { hidden = true, no_ignore = true }
+      require("telescope.builtin").find_files {
+        -- hidden = true, no_ignore = true
+      }
     end,
     desc = "Find all files",
   }
