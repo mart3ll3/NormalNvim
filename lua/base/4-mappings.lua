@@ -930,9 +930,7 @@ if is_available("telescope.nvim") then
   -- Let's disable this. It is way too imprecise. Use rnvimr instead.
   maps.n["<leader>sf"] = {
     function()
-      require("telescope.builtin").find_files {
-        -- hidden = true, no_ignore = true
-      }
+      require("telescope.builtin").find_files {}
     end,
     desc = "Find all files",
   }
@@ -982,10 +980,12 @@ if is_available("telescope.nvim") then
   maps.n["<leader>sg"] = {
     function()
       require("telescope.builtin").live_grep({
-        additional_args = function(args)
-          args.additional_args = { "--hidden", "--no-ignore" }
-          return args.additional_args
-        end,
+        -- additional_args = function(args)
+        --   args.additional_args = {
+        --     "--hidden", "--no-ignore"
+        --   }
+        --   return args.additional_args
+        -- end,
       })
     end,
     desc = "Find words in project",
@@ -1377,14 +1377,14 @@ if is_available("hop.nvim") then
   -- Note that Even though we are using ENTER for hop, you can still select items
   -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
 
-  maps.n["s"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.n["t"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
     end,
     desc = "Hop to word",
   }
-  maps.x["s"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.x["t"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
@@ -1392,6 +1392,29 @@ if is_available("hop.nvim") then
     desc = "Hop to word",
   }
 end
+
+  maps.n["s"] = {
+    require('substitute').operator({
+      modifiers = { 'trim', 'reindent' },
+    }),
+    noremap = true,
+    desc = "Substite with operator",
+  }
+  maps.n["ss"] = {
+    require('substitute').line,
+    noremap = true,
+    desc = "Substite line",
+  }
+  maps.n["S"] = {
+    require('substitute').eol,
+    noremap = true,
+    desc = "Substite EOL",
+  }
+  maps.x["s"] = {
+    require('substitute').visual,
+    noremap = true,
+    desc = "Substite Visual",
+  }
 
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
 -- WARNING: Don't delete this section, or you won't have LSP keymappings.
