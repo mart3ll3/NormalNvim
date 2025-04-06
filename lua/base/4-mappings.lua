@@ -1393,28 +1393,10 @@ if is_available("hop.nvim") then
   }
 end
 
-  maps.n["s"] = {
-    require('substitute').operator({
-      modifiers = { 'trim', 'reindent' },
-    }),
-    noremap = true,
-    desc = "Substite with operator",
-  }
-  maps.n["ss"] = {
-    require('substitute').line,
-    noremap = true,
-    desc = "Substite line",
-  }
-  maps.n["S"] = {
-    require('substitute').eol,
-    noremap = true,
-    desc = "Substite EOL",
-  }
-  maps.x["s"] = {
-    require('substitute').visual,
-    noremap = true,
-    desc = "Substite Visual",
-  }
+vim.keymap.set("n", "s", require('substitute').operator, { noremap = true })
+vim.keymap.set("n", "ss", require('substitute').line, { noremap = true })
+vim.keymap.set("n", "S", require('substitute').eol, { noremap = true })
+vim.keymap.set("x", "s", require('substitute').visual, { noremap = true })
 
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
 -- WARNING: Don't delete this section, or you won't have LSP keymappings.
