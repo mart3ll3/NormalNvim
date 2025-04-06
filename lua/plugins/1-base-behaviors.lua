@@ -766,7 +766,7 @@ return {
   {
       "kylechui/nvim-surround",
       version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
-      event = "VeryLazy",
+      event = "InsertEnter",
       opts = {
           -- your configuration comes here
           -- or leave it empty to use the default settings

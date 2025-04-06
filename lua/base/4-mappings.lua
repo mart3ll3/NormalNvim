@@ -1608,7 +1608,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
 
   -- Goto help
   local lsp_hover_config = require("base.utils.lsp").lsp_hover_config
-  lsp_mappings.n["gh"] = {
+  lsp_mappings.n["K"] = {
     function()
       vim.lsp.buf.hover(lsp_hover_config)
     end,
