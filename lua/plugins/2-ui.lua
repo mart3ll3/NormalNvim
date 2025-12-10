@@ -4,8 +4,6 @@
 --    Sections:
 --       -> tokyonight                  [theme]
 --       -> astrotheme                  [theme]
---       -> morta                       [theme]
---       -> eldritch                    [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
@@ -42,6 +40,36 @@ return {
     }
   },
 
+  {
+    "rebelot/kanagawa.nvim",
+    event = "User LoadColorSchemes",
+  },
+  {
+    "ellisonleao/gruvbox.nvim",
+    event = "User LoadColorSchemes",
+    priority = 100,
+    config = true,
+    opts = ...
+  },
+
+{ "Mofiqul/dracula.nvim",
+  event = "User LoadColorSchemes"},
+
+--  morta [theme]
+--  https://github.com/ssstba/morta.nvim
+{
+"philosofonusus/morta.nvim",
+event = "User LoadColorSchemes",
+opts = {}
+},
+
+--  eldritch [theme]
+--  https://github.com/eldritch-theme/eldritch.nvim
+{
+"eldritch-theme/eldritch.nvim",
+event = "User LoadColorSchemes",
+opts = {}
+},
   --  astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
   {
@@ -53,22 +81,6 @@ return {
     },
   },
 
-  --  morta [theme]
-  --  https://github.com/ssstba/morta.nvim
-   {
-     "philosofonusus/morta.nvim",
-     event = "User LoadColorSchemes",
-     opts = {}
-   },
-
-  --  eldritch [theme]
-  --  https://github.com/eldritch-theme/eldritch.nvim
-   {
-     "eldritch-theme/eldritch.nvim",
-     event = "User LoadColorSchemes",
-     opts = {}
-   },
-
   --  alpha-nvim [greeter]
   --  https://github.com/goolord/alpha-nvim
   {
@@ -79,16 +91,16 @@ return {
       local dashboard = require("alpha.themes.dashboard")
 
       -- Header
-      -- dashboard.section.header.val = {
-      --   "                                                                     ",
-      --   "       ████ ██████           █████      ██                     ",
-      --   "      ███████████             █████                             ",
-      --   "      █████████ ███████████████████ ███   ███████████   ",
-      --   "     █████████  ███    █████████████ █████ ██████████████   ",
-      --   "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
-      --   "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
-      --   " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
-      -- }
+      dashboard.section.header.val = {
+        "                                                                     ",
+        "       ████ ██████           █████      ██                     ",
+        "      ███████████             █████                             ",
+        "      █████████ ███████████████████ ███   ███████████   ",
+        "     █████████  ███    █████████████ █████ ██████████████   ",
+        "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
+        "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
+        " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
+      }
       -- dashboard.section.header.val = {
       --   '                                        ▟▙            ',
       --   '                                        ▝▘            ',
@@ -136,33 +148,33 @@ return {
       --   [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
       -- }
 
-      if is_android then
-        dashboard.section.header.val = {
-          [[         __                ]],
-          [[ __  __ /\_\    ___ ___    ]],
-          [[/\ \/\ \\/\ \ /' __` __`\  ]],
-          [[\ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-          [[ \ \___/  \ \_\ \_\ \_\ \_\]],
-          [[  \/__/    \/_/\/_/\/_/\/_/]],
-        }
-      else
-        dashboard.section.header.val = {
-          [[888b      88                                                           88]],
-          [[8888b     88                                                           88]],
-          [[88 `8b    88                                                           88]],
-          [[88  `8b   88   ,adPPYba,   8b,dPPYba,  88,dPYba,,adPYba,   ,adPPYYba,  88]],
-          [[88   `8b  88  a8"     "8a  88P'   "Y8  88P'   "88"    "8a  ""     `Y8  88]],
-          [[88    `8b 88  8b       d8  88          88      88      88  ,adPPPPP88  88]],
-          [[88     `8888  "8a,   ,a8"  88          88      88      88  88,    ,88  88]],
-          [[88      `888   `"YbbdP"'   88          88      88      88  `"8bbdP"Y8  88]],
-          [[                                    __                ]],
-          [[                      ___   __  __ /\_\    ___ ___    ]],
-          [[                    /' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
-          [[                    /\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
-          [[                    \ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
-          [[                     \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
-        }
-      end
+      -- if is_android then
+      --   dashboard.section.header.val = {
+      --     [[         __                ]],
+      --     [[ __  __ /\_\    ___ ___    ]],
+      --     [[/\ \/\ \\/\ \ /' __` __`\  ]],
+      --     [[\ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+      --     [[ \ \___/  \ \_\ \_\ \_\ \_\]],
+      --     [[  \/__/    \/_/\/_/\/_/\/_/]],
+      --   }
+      -- else
+      --   dashboard.section.header.val = {
+      --     [[888b      88                                                           88]],
+      --     [[8888b     88                                                           88]],
+      --     [[88 `8b    88                                                           88]],
+      --     [[88  `8b   88   ,adPPYba,   8b,dPPYba,  88,dPYba,,adPYba,   ,adPPYYba,  88]],
+      --     [[88   `8b  88  a8"     "8a  88P'   "Y8  88P'   "88"    "8a  ""     `Y8  88]],
+      --     [[88    `8b 88  8b       d8  88          88      88      88  ,adPPPPP88  88]],
+      --     [[88     `8888  "8a,   ,a8"  88          88      88      88  88,    ,88  88]],
+      --     [[88      `888   `"YbbdP"'   88          88      88      88  `"8bbdP"Y8  88]],
+      --     [[                                    __                ]],
+      --     [[                      ___   __  __ /\_\    ___ ___    ]],
+      --     [[                    /' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
+      --     [[                    /\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
+      --     [[                    \ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
+      --     [[                     \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
+      --   }
+      -- end
 
 
       local get_icon = require("base.utils").get_icon
@@ -239,7 +251,7 @@ return {
     event = "User BaseDefered",
     opts = function()
       local fps
-      if is_android then fps = 30 else fps = 244 end
+      if is_android then fps = 30 else fps = 144 end
 
       return {
         timeout = 2500,
@@ -546,6 +558,7 @@ return {
   {
     "folke/noice.nvim",
     event = "User BaseDefered",
+
     opts = function()
       local enable_conceal = false          -- Hide command text if true
       return {
@@ -574,9 +587,12 @@ return {
         },
       }
     end
+    -- config = function(_, opts)
+    --   require("noice").setup(opts)
+    -- end,
   },
 
-  --  UI icons [icons - ui]
+  --  UI icons [icons]
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
     "nvim-tree/nvim-web-devicons",
@@ -591,7 +607,7 @@ return {
     },
   },
 
-  --  LSP icons [icons | lsp]
+  --  LSP icons [icons]
   --  https://github.com/onsails/lspkind.nvim
   {
     "onsails/lspkind.nvim",
@@ -647,49 +663,50 @@ return {
   },
 
   --  mini.animate [animations]
-  --  https://github.com/nvim-mini/mini.animate
+  --  https://github.com/echasnovski/mini.animate
   --  HINT: if one of your personal keymappings fail due to mini.animate, try to
   --        disable it during the keybinding using vim.g.minianimate_disable = true
-  {
-    "nvim-mini/mini.animate",
-    event = "User BaseFile",
-    enabled = not is_android,
-    opts = function()
-      -- don't use animate when scrolling with the mouse
-      local mouse_scrolled = false
-      for _, scroll in ipairs { "Up", "Down" } do
-        local key = "<ScrollWheel" .. scroll .. ">"
-        vim.keymap.set({ "", "i" }, key, function()
-          mouse_scrolled = true
-          return key
-        end, { expr = true })
-      end
+{
+"nvim-mini/mini.animate",
+event = "User BaseFile",
+enabled = not is_android,
+opts = function()
+-- don't use animate when scrolling with the mouse
+local mouse_scrolled = false
+for _, scroll in ipairs { "Up", "Down" } do
+local key = "<ScrollWheel" .. scroll .. ">"
+vim.keymap.set({ "", "i" }, key, function()
+mouse_scrolled = true
+return key
+end, { expr = true })
+end
 
-      local animate = require("mini.animate")
-      return {
-        open = { enable = false }, -- true causes issues on nvim-spectre
-        resize = {
-          timing = animate.gen_timing.linear { duration = 33, unit = "total" },
-        },
-        scroll = {
-          timing = animate.gen_timing.linear { duration = 50, unit = "total" },
-          subscroll = animate.gen_subscroll.equal {
-            predicate = function(total_scroll)
-              if mouse_scrolled then
-                mouse_scrolled = false
-                return false
-              end
-              return total_scroll > 1
-            end,
-          },
-        },
-        cursor = {
-          enable = false, -- We don't want cursor ghosting
-          timing = animate.gen_timing.linear { duration = 26, unit = "total" },
-        },
-      }
-    end,
-  },
+local animate = require("mini.animate")
+return {
+open = { enable = false }, -- true causes issues on nvim-spectre
+resize = {
+timing = animate.gen_timing.linear { duration = 33, unit = "total" },
+},
+scroll = {
+timing = animate.gen_timing.linear { duration = 50, unit = "total" },
+subscroll = animate.gen_subscroll.equal {
+predicate = function(total_scroll)
+if mouse_scrolled then
+mouse_scrolled = false
+return false
+end
+return total_scroll > 1
+end,
+},
+},
+cursor = {
+enable = false, -- We don't want cursor ghosting
+timing = animate.gen_timing.linear { duration = 26, unit = "total" },
+},
+}
+end,
+},
+
 
   --  highlight-undo
   --  https://github.com/tzachar/highlight-undo.nvim

@@ -95,7 +95,9 @@ maps.n["<leader>W"] =
 { function() vim.cmd("SudaWrite") end, desc = "Save as sudo" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["<Leader>/"] = { "gcc", remap = true, desc = "Toggle comment line" }
+maps.n[",c"] = { "gcc", remap = true, desc = "Toggle comment line" }
 maps.x["<Leader>/"] = { "gc", remap = true, desc = "Toggle comment" }
+maps.x[",c"] = { "gc", remap = true, desc = "Toggle comment" }
 maps.n["gx"] =
 { utils.open_with_program, desc = "Open the file under cursor with a program" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
@@ -104,18 +106,20 @@ maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 maps.n["0"] =
 { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
-maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
-maps.n["<leader>q"] = {
-  function()
-    -- Ask user for confirmation
-    local choice = vim.fn.confirm("Do you really want to exit nvim?", "&Yes\n&No", 2)
-    if choice == 1 then
-      -- If user confirms, but there are still files to be saved: Ask
-      vim.cmd('confirm quit')
-    end
-  end,
-  desc = "Quit",
-}
+
+maps.n["<leader>qq"] = { ":qa!<CR>", desc = "Quit" }
+-- maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
+-- maps.n["<leader>q"] = {
+--   function()
+--     -- Ask user for confirmation
+--     local choice = vim.fn.confirm("Do you really want to exit nvim?", "&Yes\n&No", 2)
+--     if choice == 1 then
+--       -- If user confirms, but there are still files to be saved: Ask
+--       vim.cmd('confirm quit')
+--     end
+--   end,
+--   desc = "Quit",
+-- }
 maps.n["<Tab>"] = {
   "<Tab>",
   noremap = true,
@@ -130,12 +134,23 @@ maps.n["<Tab>"] = {
 --      is the keycode for scrolling, and remapping it would break it.
 if not is_android then
   -- only useful when the option clipboard is commented on ./1-options.lua
-  maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-  maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-  maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-  maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-  maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from clipboard" }
+  -- maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
+  -- maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
+  -- maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+  -- maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+  -- maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from clipboard" }
 end
+--vim.keymap.set("n", "<C-d>", "<C-d>zz")
+ vim.keymap.set("n", "<C-d>", "<Cmd>lua vim.cmd('normal! <C-d>'); MiniAnimate.execute_after('scroll', 'normal! zz')<CR>")
+ vim.keymap.set("n", "<C-u>", "<Cmd>lua vim.cmd('normal! <C-u>'); MiniAnimate.execute_after('scroll', 'normal! zz')<CR>")
+--vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-Left>", "<C-w>h", { desc = "Go Window to the left" })
+vim.keymap.set("n", "<C-Right>", "<C-w>l", { desc = "Go Window to the right" })
+vim.keymap.set("n", "<C-Down>", "<C-w>j", { desc = "Go Window to the down" })
+vim.keymap.set("n", "<C-Up>", "<C-w>k", { desc = "Go Window to the up" })
+-- vim.keymap.set("n", "<S-Right>", ":bnext<CR>", { silent = true })
+-- vim.keymap.set("n", "<S-Left>", ":bprevious<CR>", { silent = true })
+
 
 -- Make 'c' key not copy to clipboard when changing a character.
 maps.n["c"] = { '"_c', desc = "Change without yanking" }
@@ -192,19 +207,20 @@ maps.x["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 --
 -- TIP: If you prefer,  use <leader>ENTER instead of <ESC>
 --      to avoid triggering it by accident.
-maps.n["<ESC>"] = {
-  function()
-    if vim.fn.hlexists("Search") then
-      vim.cmd("nohlsearch")
-    else
-      vim.api.nvim_feedkeys(
-        vim.api.nvim_replace_termcodes("<ESC>", true, true, true),
-        "n",
-        true
-      )
-    end
-  end,
-}
+-- maps.n["<ESC>"] = {
+--   function()
+--     if vim.fn.hlexists("Search") then
+--       vim.cmd("nohlsearch")
+--     else
+--       vim.api.nvim_feedkeys(
+--         vim.api.nvim_replace_termcodes("<ESC>", true, true, true),
+--         "n",
+--         true
+--       )
+--     end
+--   end,
+-- }
+vim.keymap.set("n", "<leader>hh", "<cmd>nohlsearch<CR>", { desc = "Clear highlights" })
 
 -- Improved tabulation ------------------------------------------------------
 maps.x["<S-Tab>"] = { "<gv", desc = "unindent line" }
@@ -288,11 +304,15 @@ maps.n["<leader>pv"] = { "<cmd>DistroReadVersion<cr>", desc = "Distro version" }
 maps.n["<leader>pc"] = { "<cmd>DistroReadChangelog<cr>", desc = "Distro changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = { -- Close window and buffer at the same time.
+maps.n["<leader>x"] = { -- Close window and buffer at the same time.
   function() require("heirline-components.buffer").wipe() end,
   desc = "Wipe buffer",
 }
-maps.n["<leader>C"] = { -- Close buffer keeping the window.
+maps.n["<leader>X"] = { -- Close buffer keeping the window.
+  function() require("heirline-components.buffer").close() end,
+  desc = "Close buffer",
+}
+maps.n["<C-q>"] = { -- Close buffer keeping the window.
   function() require("heirline-components.buffer").close() end,
   desc = "Close buffer",
 }
@@ -311,13 +331,13 @@ maps.n["<leader>ba"] = {
   function() vim.cmd("wa") end,
   desc = "Write all changed buffers",
 }
-maps.n["]b"] = {
+maps.n["<S-Right>"] = {
   function()
     require("heirline-components.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Next buffer",
 }
-maps.n["[b"] = {
+maps.n["<S-Left>"] = {
   function()
     require("heirline-components.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
@@ -337,11 +357,11 @@ maps.n["<b"] = {
 }
 
 maps.n["<leader>b"] = icons.b
-maps.n["<leader>bc"] = {
+maps.n["<leader>bu"] = {
   function() require("heirline-components.buffer").close_all(true) end,
   desc = "Close all buffers except current",
 }
-maps.n["<leader>bC"] = {
+maps.n["<leader>ba"] = {
   function() require("heirline-components.buffer").close_all() end,
   desc = "Close all buffers",
 }
@@ -429,43 +449,43 @@ maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- zen mode
 if is_available("zen-mode.nvim") then
-  maps.n["<leader>uz"] =
-  { function() ui.toggle_zen_mode() end, desc = "Zen mode [g]" }
+  maps.n["<leader>zz"] =
+  { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
 end
 
 -- ui toggles [ui] ---------------------------------------------------------
-maps.n["<leader>u"] = icons.u
+maps.n["<leader>z"] = icons.u
 if is_available("nvim-autopairs") then
-  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs [g]" }
+  maps.n["<leader>za"] = { ui.toggle_autopairs, desc = "Autopairs" }
 end
-maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background [g]" }
+maps.n["<leader>zb"] = { ui.toggle_background, desc = "Background" }
 if is_available("nvim-cmp") then
-  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion [g]" }
+  maps.n["<leader>zc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
-if is_available("nvim-highlight-colors") then
-  -- TODO: Create an actual toggle for this in ./utils/ui.lua
-  maps.n["<leader>uC"] =
-  { ui.toggle_css_colors, desc = "CSS #colors [g]" }
+if is_available("nvim-colorizer.lua") then
+  maps.n["<leader>zC"] =
+  { "<cmd>ColorizerToggle<cr>", desc = "color highlight" }
 end
-maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "LSP Diagnostics [g]" }
-maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn [w]" }
-maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline [*]" }
-maps.n["<leader>un"] = { ui.toggle_line_numbers, desc = "Line numbers [w]" }
-maps.n["<leader>uN"] = { ui.toggle_notifications, desc = "Notifications [g]" }
-maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode [g]" }
-maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck [w]" }
-maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal [w]" }
-maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline [g]" }
-maps.n["<leader>uT"] = { ui.set_tabulation, desc = "Tabulation [b]" }
-maps.n["<leader>uu"] = { ui.toggle_url_hl, desc = "URL highlight [g]" }
-maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Line wrap [w]" }
-maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight [b]" }
-maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn [w]" }
+maps.n["<leader>zd"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
+maps.n["<leader>zD"] = { ui.set_indent, desc = "Change indent setting" }
+maps.n["<leader>zg"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
+maps.n["<leader>zl"] = { ui.toggle_statusline, desc = "Statusline" }
+maps.n["<leader>zn"] = { ui.change_number, desc = "Change line numbering" }
+maps.n["<leader>zP"] = { ui.toggle_paste, desc = "Paste mode" }
+maps.n["<leader>zs"] = { ui.toggle_spell, desc = "Spellcheck" }
+maps.n["<leader>zS"] = { ui.toggle_conceal, desc = "Conceal" }
+maps.n["<leader>zt"] = { ui.toggle_tabline, desc = "Tabline" }
+maps.n["<leader>zu"] = { ui.toggle_url_effect, desc = "URL highlight" }
+maps.n["<leader>zw"] = { ui.toggle_wrap, desc = "Wrap" }
+maps.n["<leader>zy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
+maps.n["<leader>zh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
+maps.n["<leader>zN"] =
+{ ui.toggle_ui_notifications, desc = "UI notifications" }
 if is_available("lsp_signature.nvim") then
-  maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature [g]" }
+  maps.n["<leader>zp"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
 end
 if is_available("mini.animate") then
-  maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations [g]" }
+  maps.n["<leader>zA"] = { ui.toggle_animations, desc = "Animations" }
 end
 
 -- shifted movement keys ----------------------------------------------------
@@ -604,7 +624,7 @@ if is_available("gitsigns.nvim") then
     function() require("gitsigns").reset_buffer() end,
     desc = "Reset Git buffer",
   }
-  maps.n["<leader>gs"] = {
+  maps.n["<leader>gh"] = {
     function() require("gitsigns").stage_hunk() end,
     desc = "Stage Git hunk",
   }
@@ -616,7 +636,7 @@ if is_available("gitsigns.nvim") then
     function() require("gitsigns").undo_stage_hunk() end,
     desc = "Unstage Git hunk",
   }
-  maps.n["<leader>gd"] = {
+  maps.n["<leader>gD"] = {
     function() require("gitsigns").diffthis() end,
     desc = "View Git diff",
   }
@@ -630,7 +650,7 @@ if is_available("vim-fugitive") then
 end
 -- git client
 if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
-  maps.n["<leader>gg"] = {
+  maps.n["<leader>gs"] = {
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
@@ -670,10 +690,9 @@ if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then
   }
 end
 
--- neotree
-if is_available("neo-tree.nvim") then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Neotree" }
-end
+  maps.n["<leader>e"] = { function() require('oil').toggle_float() end, desc = "Oil" }
+-- maps.n["<leader>aa"] = { "<cmd>AvanteToggle<cr>", desc = "Avante Toggle" }
+
 
 -- session manager ---------------------------------------------------------
 if is_available("neovim-session-manager") then
@@ -721,54 +740,54 @@ end
 
 -- smart-splits.nvim
 if is_available("smart-splits.nvim") then
-  maps.n["<C-h>"] = {
-    function() require("smart-splits").move_cursor_left() end,
-    desc = "Move to left split",
-  }
-  maps.n["<C-j>"] = {
-    function() require("smart-splits").move_cursor_down() end,
-    desc = "Move to below split",
-  }
+  -- maps.n["<C-h>"] = {
+  --   function() require("smart-splits").move_cursor_left() end,
+  --   desc = "Move to left split",
+  -- }
+  -- maps.n["<C-j>"] = {
+  --   function() require("smart-splits").move_cursor_down() end,
+  --   desc = "Move to below split",
+  -- }
+  -- maps.n["<C-k>"] = {
+  --   function() require("smart-splits").move_cursor_up() end,
+  --   desc = "Move to above split",
+  -- }
+  -- maps.n["<C-l>"] = {
+  --   function() require("smart-splits").move_cursor_right() end,
+  --   desc = "Move to right split",
+  -- }
   maps.n["<C-k>"] = {
-    function() require("smart-splits").move_cursor_up() end,
-    desc = "Move to above split",
-  }
-  maps.n["<C-l>"] = {
-    function() require("smart-splits").move_cursor_right() end,
-    desc = "Move to right split",
-  }
-  maps.n["<C-Up>"] = {
     function() require("smart-splits").resize_up() end,
     desc = "Resize split up",
   }
-  maps.n["<C-Down>"] = {
+  maps.n["<C-j>"] = {
     function() require("smart-splits").resize_down() end,
     desc = "Resize split down",
   }
-  maps.n["<C-Left>"] = {
+  maps.n["<C-h>"] = {
     function() require("smart-splits").resize_left() end,
     desc = "Resize split left",
   }
-  maps.n["<C-Right>"] = {
+  maps.n["<C-l"] = {
     function() require("smart-splits").resize_right() end,
     desc = "Resize split right",
   }
 else
-  maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
-  maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
-  maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
-  maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
-  maps.n["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
-  maps.n["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
-  maps.n["<C-Left>"] =
+  -- maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
+  -- maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
+  -- maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
+  -- maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
+  maps.n["<C-k>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
+  maps.n["<C-j>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
+  maps.n["<C-h>"] =
   { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
-  maps.n["<C-Right>"] =
+  maps.n["<C-l>"] =
   { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
 -- aerial.nvimm ------------------------------------------------------------
 if is_available("aerial.nvim") then
-  maps.n["<leader>i"] =
+  maps.n["<leader>o"] =
   { function() require("aerial").toggle() end, desc = "Aerial" }
 end
 
@@ -831,15 +850,15 @@ if is_available("telescope.nvim") then
     function() require("telescope.builtin").git_status() end,
     desc = "Git status",
   }
-  maps.n["<leader>f<CR>"] = {
+  maps.n["<leader>s<CR>"] = {
     function() require("telescope.builtin").resume() end,
     desc = "Resume previous search",
   }
-  maps.n["<leader>f'"] = {
+  maps.n["<leader>s'"] = {
     function() require("telescope.builtin").marks() end,
     desc = "Find marks",
   }
-  maps.n["<leader>fa"] = {
+  maps.n["<leader>si"] = {
     function()
       local cwd = vim.fn.stdpath "config" .. "/.."
       local search_dirs = { vim.fn.stdpath "config" }
@@ -853,56 +872,56 @@ if is_available("telescope.nvim") then
     end,
     desc = "Find nvim config files",
   }
-  maps.n["<leader>fB"] = {
+  maps.n["<leader>sB"] = {
     function() require("telescope.builtin").buffers() end,
     desc = "Find buffers",
   }
-  maps.n["<leader>fw"] = {
+  maps.n["<leader>sw"] = {
     function() require("telescope.builtin").grep_string() end,
     desc = "Find word under cursor in project",
   }
-  maps.n["<leader>fC"] = {
+  maps.n["<leader>sC"] = {
     function() require("telescope.builtin").commands() end,
     desc = "Find commands",
   }
   -- Let's disable this. It is way too imprecise. Use rnvimr instead.
-  -- maps.n["<leader>ff"] = {
-  --   function()
-  --     require("telescope.builtin").find_files { hidden = true, no_ignore = true }
-  --   end,
-  --   desc = "Find all files",
-  -- }
+  maps.n["<leader>sf"] = {
+    function()
+      require("telescope.builtin").find_files {}
+    end,
+    desc = "Find all files",
+  }
   -- maps.n["<leader>fF"] = {
   --   function() require("telescope.builtin").find_files() end,
   --   desc = "Find files (no hidden)",
   -- }
-  maps.n["<leader>fh"] = {
+  maps.n["<leader>sh"] = {
     function() require("telescope.builtin").help_tags() end,
     desc = "Find help",
   }
-  maps.n["<leader>fk"] = {
+  maps.n["<leader>sk"] = {
     function() require("telescope.builtin").keymaps() end,
     desc = "Find keymaps",
   }
-  maps.n["<leader>fm"] = {
+  maps.n["<leader>sm"] = {
     function() require("telescope.builtin").man_pages() end,
     desc = "Find man",
   }
   if is_available("nvim-notify") then
-    maps.n["<leader>fn"] = {
+    maps.n["<leader>sn"] = {
       function() require("telescope").extensions.notify.notify() end,
       desc = "Find notifications",
     }
   end
-  maps.n["<leader>fo"] = {
+  maps.n["<leader>so"] = {
     function() require("telescope.builtin").oldfiles() end,
     desc = "Find recent",
   }
-  maps.n["<leader>fv"] = {
+  maps.n["<leader>sv"] = {
     function() require("telescope.builtin").registers() end,
     desc = "Find vim registers",
   }
-  maps.n["<leader>ft"] = {
+  maps.n["<leader>th"] = {
     function()
       -- load color schemes before listing them
       pcall(vim.api.nvim_command, "doautocmd User LoadColorSchemes")
@@ -915,22 +934,24 @@ if is_available("telescope.nvim") then
     end,
     desc = "Find themes",
   }
-  maps.n["<leader>ff"] = {
+  maps.n["<leader>sg"] = {
     function()
       require("telescope.builtin").live_grep({
-        additional_args = function(args)
-          args.additional_args = { "--hidden", "--no-ignore" }
-          return args.additional_args
-        end,
+        -- additional_args = function(args)
+        --   args.additional_args = {
+        --     "--hidden", "--no-ignore"
+        --   }
+        --   return args.additional_args
+        -- end,
       })
     end,
     desc = "Find words in project",
   }
-  maps.n["<leader>fF"] = {
+  maps.n["<leader>sF"] = {
     function() require("telescope.builtin").live_grep() end,
     desc = "Find words in project (no hidden)",
   }
-  maps.n["<leader>f/"] = {
+  maps.n["<leader>s/"] = {
     function() require("telescope.builtin").current_buffer_fuzzy_find() end,
     desc = "Find words in current buffer",
   }
@@ -962,7 +983,7 @@ if is_available("telescope.nvim") then
 
   -- extra - project.nvim
   if is_available("project.nvim") then
-    maps.n["<leader>fp"] = {
+    maps.n["<leader>sp"] = {
       function() vim.cmd("Telescope projects") end,
       desc = "Find project",
     }
@@ -970,11 +991,11 @@ if is_available("telescope.nvim") then
 
   -- extra - spectre.nvim (search and replace in project)
   if is_available("nvim-spectre") then
-    maps.n["<leader>fr"] = {
+    maps.n["<leader>sr"] = {
       function() require("spectre").toggle() end,
       desc = "Find and replace word in project",
     }
-    maps.n["<leader>fb"] = {
+    maps.n["<leader>sb"] = {
       function() require("spectre").toggle { path = vim.fn.expand "%:t:p" } end,
       desc = "Find and replace word in buffer",
     }
@@ -982,7 +1003,7 @@ if is_available("telescope.nvim") then
 
   -- extra - luasnip
   if is_available("LuaSnip") and is_available("telescope-luasnip.nvim") then
-    maps.n["<leader>fs"] = {
+    maps.n["<leader>ss"] = {
       function() require("telescope").extensions.luasnip.luasnip {} end,
       desc = "Find snippets",
     }
@@ -991,11 +1012,11 @@ if is_available("telescope.nvim") then
   -- extra - nvim-neoclip (neovim internal clipboard)
   --         Specially useful if you disable the shared clipboard in options.
   if is_available("nvim-neoclip.lua") then
-    maps.n["<leader>fy"] = {
+    maps.n["<leader>sy"] = {
       function() require("telescope").extensions.neoclip.default() end,
       desc = "Find yank history",
     }
-    maps.n["<leader>fq"] = {
+    maps.n["<leader>sq"] = {
       function() require("telescope").extensions.macroscope.default() end,
       desc = "Find macro history",
     }
@@ -1003,7 +1024,7 @@ if is_available("telescope.nvim") then
 
   -- extra - undotree
   if is_available("telescope-undo.nvim") then
-    maps.n["<leader>fu"] = {
+    maps.n["<leader>u"] = {
       function() require("telescope").extensions.undo.undo() end,
       desc = "Find in undo tree",
     }
@@ -1044,10 +1065,14 @@ if is_available("toggleterm.nvim") then
   maps.n["<leader>t"] = icons.t
   maps.n["<leader>tt"] =
   { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
-  maps.n["<leader>th"] = {
-    "<cmd>ToggleTerm size=10 direction=horizontal<cr>",
-    desc = "Toggleterm horizontal split",
-  }
+  maps.n["<C-t>"] =
+  { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
+  maps.t["<C-t>"] =
+  { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
+  -- maps.n["<leader>th"] = {
+  --   "<cmd>ToggleTerm size=10 direction=horizontal<cr>",
+  --   desc = "Toggleterm horizontal split",
+  -- }
   maps.n["<leader>tv"] = {
     "<cmd>ToggleTerm size=80 direction=vertical<cr>",
     desc = "Toggleterm vertical split",
@@ -1297,26 +1322,26 @@ if is_available("markdown-preview.nvim") or is_available("markmap.nvim") or is_a
 end
 
 -- [neural] -----------------------------------------------------------------
-if is_available("neural") or is_available("copilot") then
-  maps.n["<leader>a"] = {
-    function() require("neural").prompt() end,
-    desc = "Ask chatgpt",
-  }
-end
+-- if is_available("neural") or is_available("copilot") then
+--   maps.n["<leader>a"] = {
+--     function() require("neural").prompt() end,
+--     desc = "Ask chatgpt",
+--   }
+-- end
 
 -- hop.nvim ----------------------------------------------------------------
 if is_available("hop.nvim") then
   -- Note that Even though we are using ENTER for hop, you can still select items
   -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
 
-  maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.n["s"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
     end,
     desc = "Hop to word",
   }
-  maps.x["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.x["s"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require("hop")
       vim.cmd("silent! HopWord")
@@ -1324,6 +1349,11 @@ if is_available("hop.nvim") then
     desc = "Hop to word",
   }
 end
+
+vim.keymap.set("n", "m", require('substitute').operator, { noremap = true })
+vim.keymap.set("n", "mm", require('substitute').line, { noremap = true })
+vim.keymap.set("n", "M", require('substitute').eol, { noremap = true })
+vim.keymap.set("x", "m", require('substitute').visual, { noremap = true })
 
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
 -- WARNING: Don't delete this section, or you won't have LSP keymappings.
@@ -1405,7 +1435,7 @@ function M.lsp_mappings(client, bufnr)
     end,
     desc = "LSP codelens run",
   }
-  lsp_mappings.n["<leader>uL"] = {
+  lsp_mappings.n["<leader>zL"] = {
     function() ui.toggle_codelens() end,
     desc = "Codelens [b]",
   }
@@ -1415,14 +1445,14 @@ function M.lsp_mappings(client, bufnr)
     format_on_save = { enabled = vim.g.autoformat_enabled or false },
     disabled = {} -- You can disable formatting for desired lsp clients.
   }
-  lsp_mappings.n["<leader>lf"] = {
+  lsp_mappings.n["<leader>ff"] = {
     function()
       vim.lsp.buf.format(format_opts)
       vim.cmd("checktime") -- Sync buffer with changes
     end,
     desc = "Format buffer",
   }
-  lsp_mappings.v["<leader>lf"] = lsp_mappings.n["<leader>lf"]
+  lsp_mappings.v["<leader>ff"] = lsp_mappings.n["<leader>ff"]
 
   -- Formatting (command)
   vim.api.nvim_buf_create_user_command(
@@ -1529,7 +1559,7 @@ function M.lsp_mappings(client, bufnr)
 
   -- Goto help
   local hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
-  lsp_mappings.n["gh"] = {
+  lsp_mappings.n["K"] = {
     function()
       vim.lsp.buf.hover(hover_opts)
     end,
@@ -1568,7 +1598,7 @@ function M.lsp_mappings(client, bufnr)
   -- Toggle inlay hints
   if vim.b.inlay_hints_enabled == nil then vim.b.inlay_hints_enabled = vim.g.inlay_hints_enabled end
   if vim.b.inlay_hints_enabled then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
-  lsp_mappings.n["<leader>uH"] = {
+  lsp_mappings.n["<leader>zH"] = {
     function() require("base.utils.ui").toggle_buffer_inlay_hints(bufnr) end,
     desc = "LSP inlay hints [b]",
   }
