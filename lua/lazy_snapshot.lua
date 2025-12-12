@@ -111,4 +111,6 @@ return {
   { "zeioth/none-ls-autoload.nvim", version = "^1" },
   { "zeioth/none-ls-external-sources.nvim", version = "^1" },
   { "zeioth/project.nvim", commit = "9cc719f455295e7a2fc7340d4fd87327f3fe15ca" },
+  { "stevearc/oil.nvim", version = "latest"},
+
 }
